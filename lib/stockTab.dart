@@ -131,7 +131,7 @@ class _stockTabState extends State<stockTab> {
                           color: Colors.black.withOpacity(0.15),
                           spreadRadius: 2,
                           blurRadius: 6,
-                          offset: Offset(0, 4),
+                          offset: Offset(0, 4)
                         )
                       ],
                       borderRadius: BorderRadius.only(
