@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "367316612425",
+    "project_id": "invenstore-f6378",
+    "storage_bucket": "invenstore-f6378.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367316612425:android:bf5eb64f6ad60fb9971698",
+        "android_client_info": {
+          "package_name": "com.example.dicoding_submission_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367316612425-2f8e1u756iijulpo363ouvqvsld705jo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZgLLRAM7s00Vtamo6zpTDsW839hjfskI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367316612425-2f8e1u756iijulpo363ouvqvsld705jo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

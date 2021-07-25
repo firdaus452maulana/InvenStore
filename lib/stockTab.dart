@@ -1,3 +1,4 @@
+import 'package:dicoding_submission_flutter/addStock.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,7 +54,7 @@ class _stockTabState extends State<stockTab> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Out of Stock",
+                            "Item",
                             style: GoogleFonts.openSans(
                                 color: Colors.white70,
                                 fontSize: 12,
@@ -141,7 +142,16 @@ class _stockTabState extends State<stockTab> {
                         bottomLeft: Radius.circular(0),
                       ),
                     ),
-                    child: Text("TEst"),
+                    child: RaisedButton(
+                      color: Color(0xFF031F4B),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      textColor: Colors.white,
+
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => addStockPage()));
+                      },
+                    ),
                   ),
                 )
               ],

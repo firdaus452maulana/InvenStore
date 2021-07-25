@@ -1,3 +1,4 @@
+import 'package:dicoding_submission_flutter/addStock.dart';
 import 'package:dicoding_submission_flutter/orderTab.dart';
 import 'package:dicoding_submission_flutter/partnershipTab.dart';
 import 'package:dicoding_submission_flutter/stockTab.dart';
@@ -67,17 +68,20 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
   }
 
   //Tombol Floating Button
-  Widget addStock(){
+  Widget addStockButton(){
     return Container(
       child: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => addStockPage()));
+        },
         tooltip: "Add Stock",
         child: Icon(Icons.storage),
       ),
     );
   }
 
-  Widget addOrder(){
+  Widget addOrderButton(){
     return Container(
       child: FloatingActionButton(
         onPressed: (){},
@@ -87,7 +91,7 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
     );
   }
 
-  Widget addPartnership(){
+  Widget addPartnershipButton(){
     return Container(
       child: FloatingActionButton(
         onPressed: (){},
@@ -97,7 +101,7 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
     );
   }
 
-  Widget addStore(){
+  Widget addStoreButton(){
     return Container(
       child: FloatingActionButton(
         onPressed: (){},
@@ -134,16 +138,16 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Transform(transform: Matrix4.translationValues(0, _translateButton.value*4.0, 0),
-            child: addStock(),
+            child: addStockButton(),
           ),
           Transform(transform: Matrix4.translationValues(0, _translateButton.value*3.0, 0),
-            child: addOrder(),
+            child: addOrderButton(),
           ),
           Transform(transform: Matrix4.translationValues(0, _translateButton.value*2.0, 0),
-            child: addPartnership(),
+            child: addPartnershipButton(),
           ),
           Transform(transform: Matrix4.translationValues(0, _translateButton.value, 0),
-            child: addStore(),
+            child: addStoreButton(),
           ),
           buttonToggle()
         ],
