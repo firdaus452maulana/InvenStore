@@ -11,6 +11,18 @@ class _stockTabState extends State<stockTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        height: 48,
+        width: 48,
+        margin: EdgeInsets.only(bottom: 12, left: 12, right: 6),
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xFF00A5FF),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => addStockPage()));
+          },
+        ),
+      ),
       body: Stack(
         children: <Widget>[
           Container(
@@ -21,6 +33,35 @@ class _stockTabState extends State<stockTab> {
                     stops: [0.05, 0.5],
                     colors: [Color(0xFF79CAF6), Color(0xFF2E9EDA)]
                 )
+            ),
+          ),
+          Positioned(
+            child: PreferredSize(
+              preferredSize: Size.fromHeight(56),
+              child: AppBar(
+                title: Text(
+                  "Stocks",
+                  style: GoogleFonts.openSans(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16
+                  ),
+                ),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: InkWell(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('images/pp.jpg'),
+                      ),
+                      onTap: (){},
+                    ),
+                  )
+                ],
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+              ),
             ),
           ),
           Container(
@@ -142,48 +183,10 @@ class _stockTabState extends State<stockTab> {
                         bottomLeft: Radius.circular(0),
                       ),
                     ),
-                    child: RaisedButton(
-                      color: Color(0xFF031F4B),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      textColor: Colors.white,
-
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => addStockPage()));
-                      },
-                    ),
+                    child: Text("Test"),
                   ),
                 )
               ],
-            ),
-          ),
-          Positioned(
-            child: PreferredSize(
-              preferredSize: Size.fromHeight(56),
-              child: AppBar(
-                title: Text(
-                  "Stocks",
-                  style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16
-                  ),
-                ),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: InkWell(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('images/pp.jpg'),
-                      ),
-                      onTap: (){},
-                    ),
-                  )
-                ],
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-              ),
             ),
           ),
         ],

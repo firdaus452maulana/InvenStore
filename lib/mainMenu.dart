@@ -134,24 +134,33 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Transform(transform: Matrix4.translationValues(0, _translateButton.value*4.0, 0),
-            child: addStockButton(),
-          ),
-          Transform(transform: Matrix4.translationValues(0, _translateButton.value*3.0, 0),
-            child: addOrderButton(),
-          ),
-          Transform(transform: Matrix4.translationValues(0, _translateButton.value*2.0, 0),
-            child: addPartnershipButton(),
-          ),
-          Transform(transform: Matrix4.translationValues(0, _translateButton.value, 0),
-            child: addStoreButton(),
-          ),
-          buttonToggle()
-        ],
-      ),
+      // floatingActionButton: Column(
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: <Widget>[
+      //     Transform(transform: Matrix4.translationValues(0, _translateButton.value*4.0, 0),
+      //       child: Container(
+      //         child: FloatingActionButton(
+      //           onPressed: () {
+      //             Navigator.push(
+      //                 context, MaterialPageRoute(builder: (context) => addStockPage()));
+      //           },
+      //           tooltip: "Add Stock",
+      //           child: Icon(Icons.storage),
+      //         ),
+      //       ),
+      //     ),
+      //     Transform(transform: Matrix4.translationValues(0, _translateButton.value*3.0, 0),
+      //       child: addOrderButton(),
+      //     ),
+      //     Transform(transform: Matrix4.translationValues(0, _translateButton.value*2.0, 0),
+      //       child: addPartnershipButton(),
+      //     ),
+      //     Transform(transform: Matrix4.translationValues(0, _translateButton.value, 0),
+      //       child: addStoreButton(),
+      //     ),
+      //     buttonToggle()
+      //   ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [
