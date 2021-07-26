@@ -1,4 +1,4 @@
-import 'package:dicoding_submission_flutter/addStock.dart';
+import 'package:dicoding_submission_flutter/AddPage/addStock.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

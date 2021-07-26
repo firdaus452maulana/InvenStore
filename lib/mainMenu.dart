@@ -1,4 +1,4 @@
-import 'package:dicoding_submission_flutter/addStock.dart';
+import 'file:///D:/Firdaus/KULIAH/%234%20PROJECT/AndroidStudioProjects/dicoding_submission_flutter/lib/AddPage/addStock.dart';
 import 'package:dicoding_submission_flutter/orderTab.dart';
 import 'package:dicoding_submission_flutter/partnershipTab.dart';
 import 'package:dicoding_submission_flutter/stockTab.dart';

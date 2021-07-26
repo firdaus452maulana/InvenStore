@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "367316612425",
-    "project_id": "invenstore-f6378",
-    "storage_bucket": "invenstore-f6378.appspot.com"
+    "project_number": "504989230695",
+    "project_id": "invenstore-dicoding-a1ce6",
+    "storage_bucket": "invenstore-dicoding-a1ce6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:367316612425:android:bf5eb64f6ad60fb9971698",
+        "mobilesdk_app_id": "1:504989230695:android:df0b5a049be65e443496c2",
         "android_client_info": {
           "package_name": "com.example.dicoding_submission_flutter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "367316612425-2f8e1u756iijulpo363ouvqvsld705jo.apps.googleusercontent.com",
+          "client_id": "504989230695-ij7re8ecs3fmtlodnl2uq6nve1rqdvcs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZgLLRAM7s00Vtamo6zpTDsW839hjfskI"
+          "current_key": "AIzaSyA53IxFHanYYDL60tj3a9w7IhpOsof7vhU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "367316612425-2f8e1u756iijulpo363ouvqvsld705jo.apps.googleusercontent.com",
+              "client_id": "504989230695-ij7re8ecs3fmtlodnl2uq6nve1rqdvcs.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
