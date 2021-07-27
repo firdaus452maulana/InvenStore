@@ -14,11 +14,13 @@ class addStockPage extends StatefulWidget {
 
 class _addStockPageState extends State<addStockPage> {
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _namaItemController,
       _hargaItemController;
-  DatabaseReference _reference;
+  DatabaseReference _reference, _ref;
   File _imageItem;
   String _urlItemImage;
+  int _jumlahItem;
 
   @override
   void initState() {
@@ -27,11 +29,14 @@ class _addStockPageState extends State<addStockPage> {
     _namaItemController = TextEditingController();
     _hargaItemController = TextEditingController();
     _reference = FirebaseDatabase.instance.reference().child('listItem');
+    _ref = FirebaseDatabase.instance.reference().child('common');
+    getStockSoldDetail();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Stack(
         children: <Widget>[
           Container(
@@ -224,8 +229,18 @@ class _addStockPageState extends State<addStockPage> {
                                           .then((img) {
                                         _imageItem = img;
                                       });
+                                      SnackBar snackbar = SnackBar(
+                                          content:
+                                          Text('Mohon Tunggu'));
+                                      scaffoldKey.currentState
+                                          .showSnackBar(snackbar);
                                       postImage(_imageItem).then((downloadUrl) {
                                         _urlItemImage = downloadUrl;
+                                        SnackBar snackbar = SnackBar(
+                                            content:
+                                            Text('Uploaded Successfully'));
+                                        scaffoldKey.currentState
+                                            .showSnackBar(snackbar);
                                       });
                                       setState(() {});
                                     },
@@ -291,10 +306,26 @@ class _addStockPageState extends State<addStockPage> {
       'url' : urlItem,
     };
 
+    _jumlahItem ++;
+    Map<String,String> common = {
+      'stocks' : _jumlahItem.toString(),
+    };
+
+    _ref.update(common);
     _reference.push().set(item).then((value) {
       justReset();
       Navigator.pop(context);
     });
+  }
+
+  getStockSoldDetail() async {
+    DataSnapshot snapshot = await _ref.once();
+
+    Map common = snapshot.value;
+
+    String jumlah = common['stocks'];
+
+    _jumlahItem = int.parse(jumlah);
   }
 
   justReset() {

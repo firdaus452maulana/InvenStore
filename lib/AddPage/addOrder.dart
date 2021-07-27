@@ -30,7 +30,6 @@ class _addOrderPageState extends State<addOrderPage> {
     _jumlahItemController = TextEditingController();
     _reference = FirebaseDatabase.instance.reference().child('listItem');
     _referenceOrder = FirebaseDatabase.instance.reference().child('listOrder');
-    _ref = FirebaseDatabase.instance.reference().child('common');
     _indogs();
     getItemDetail();
   }

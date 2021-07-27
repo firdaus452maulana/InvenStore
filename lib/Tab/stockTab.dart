@@ -13,17 +13,19 @@ class stockTab extends StatefulWidget {
 
 class _stockTabState extends State<stockTab> {
 
-  DatabaseReference _reference;
+  DatabaseReference _reference, _ref;
   Query _query;
-  String _namaItem, _hargaItem, _urlItem;
-  int _jumlahItem, _jumlahSoldOOut;
+  String _namaItem, _hargaItem, _urlItem, jumlah, soldOut;
+  int _jumlahItem, _jumlahSoldOut;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _reference = FirebaseDatabase.instance.reference().child('listItem');
+    _ref = FirebaseDatabase.instance.reference().child('common');
     _query = FirebaseDatabase.instance.reference().child('listItem').orderByChild('nama');
+    getStockSoldDetail();
   }
 
   Widget _buildListItem({Map item}){
@@ -309,14 +311,23 @@ class _stockTabState extends State<stockTab> {
                             ),
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            _jumlahItem.toString(),
+                          jumlah != null
+                          ? Text(
+                            jumlah,
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold
                             ),
-                          ),
+                          )
+                          : Text(
+                            'Loading...',
+                            style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -352,14 +363,23 @@ class _stockTabState extends State<stockTab> {
                             ),
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            "2000000",
+                          soldOut != null
+                              ? Text(
+                            soldOut,
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold
                             ),
-                          ),
+                          )
+                              : Text(
+                            'Loading...',
+                            style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -423,6 +443,20 @@ class _stockTabState extends State<stockTab> {
     _hargaItem = item['harga'];
     _urlItem = item['url'];
 
+  }
+
+  getStockSoldDetail() async {
+    DataSnapshot snapshot = await _ref.once();
+
+    Map common = snapshot.value;
+
+    jumlah = common['stocks'];
+    soldOut = common['sold out'];
+
+    _jumlahItem = int.parse(jumlah);
+    _jumlahSoldOut = int.parse(soldOut);
+
+    setState(() {});
   }
 
   justReset() {
