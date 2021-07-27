@@ -116,7 +116,7 @@ class _addStockPageState extends State<addStockPage> {
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(30)),
                                       borderSide:
-                                      BorderSide(color: Color(0xFF031F4B))),
+                                      BorderSide(color: Color(0xFF1F3A93))),
                                   filled: false,
                                   contentPadding:
                                   EdgeInsets.only(left: 24.0, right: 24.0),
@@ -149,7 +149,7 @@ class _addStockPageState extends State<addStockPage> {
                           ),
                           SizedBox(height: 12,),
 
-                          // NAMA ITEM
+                          // HARGA ITEM
                           Container(
                             child: TextFormField(
                               cursorColor: Colors.black,
@@ -172,7 +172,7 @@ class _addStockPageState extends State<addStockPage> {
                                       borderRadius:
                                       BorderRadius.all(Radius.circular(30)),
                                       borderSide:
-                                      BorderSide(color: Color(0xFF031F4B))),
+                                      BorderSide(color: Color(0xFF1F3A93))),
                                   filled: false,
                                   contentPadding:
                                   EdgeInsets.only(left: 24.0, right: 24.0),

@@ -1,3 +1,4 @@
+import 'package:dicoding_submission_flutter/AddPage/addOrder.dart';
 import 'package:dicoding_submission_flutter/AddPage/addStock.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -55,8 +56,8 @@ class _stockTabState extends State<stockTab> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: item['url'] != null
-                    ? Image.network(item['url'])
-                    : Image.network('https://i.stack.imgur.com/y9DpT.jpg'),
+                    ? Image.network(item['url'], fit: BoxFit.fill,)
+                    : Image.network('https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png', fit: BoxFit.fill),
                   ),
                 ),
             ),
@@ -125,13 +126,13 @@ class _stockTabState extends State<stockTab> {
                         // untuk mengatur agar widget column mengikuti widget
                         children: <Widget>[
                           Container(
-                            height: 350,
-                            width: 350,
+                            height: 300,
+                            width: 300,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: _urlItem != null
-                                  ? Image.network(_urlItem)
-                                  : Image.network('https://i.stack.imgur.com/y9DpT.jpg'),
+                                  ? Image.network(_urlItem, fit: BoxFit.fill)
+                                  : Image.network('https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png', fit: BoxFit.fill),
                             ),
                           ),
                           Align(
@@ -176,7 +177,9 @@ class _stockTabState extends State<stockTab> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => addOrderPage(itemKey: itemKey,)));
+                            },
                           )
                         ],
                       ),
