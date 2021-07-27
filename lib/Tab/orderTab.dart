@@ -13,6 +13,9 @@ class _orderTabState extends State<orderTab> {
 
   DatabaseReference _reference;
   Query _queryOrder;
+  String _namaItem, _urlItem, _jumlahItem, _date, _namaPembeli, _alamatPembeli, valueStatus;
+
+  List status = ["Menunggu", "Diperiksa", "Batal", "Terkirim"];
 
   @override
   void initState() {
@@ -23,9 +26,12 @@ class _orderTabState extends State<orderTab> {
   }
 
   Widget _buildListOrder({Map order}){
+    Color statusColor = getStatusColor(order['status']);
+
     return GestureDetector(
       onTap: (){
-        //_showDialogOrder(item['key']);
+        if (order['status'] != 'Terkirim')
+          _showDialogStatus(order['key']);
       },
       child: Container(
         margin: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -85,9 +91,9 @@ class _orderTabState extends State<orderTab> {
                             child: Text(
                               order['status'],
                               style: GoogleFonts.openSans(
-                                  color: Colors.black,
+                                  color: statusColor,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12
+                                  fontSize: 16
                               ),
                             ),
                           ),
@@ -143,6 +149,257 @@ class _orderTabState extends State<orderTab> {
         ),
       ),
     );
+  }
+
+  Widget _showDialogStatus(String orderKey){
+    getOrderDetail(orderKey: orderKey);
+    showDialog(
+        context: context,
+        builder: (context){
+          return Dialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Container(
+              margin: EdgeInsets.all(24),
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: 16, bottom: 16, left: 8, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //posisi
+                        mainAxisSize: MainAxisSize.min,
+                        // untuk mengatur agar widget column mengikuti widget
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: _urlItem != null
+                                        ? Image.network(_urlItem, fit: BoxFit.fill)
+                                        : Image.network('https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png', fit: BoxFit.fill),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.all(12),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            _date,
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(height: 4,)  ,
+
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            _namaItem,
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(height: 4,)  ,
+
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            _jumlahItem + 'lusin',
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 16
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              )
+                            ],
+                          ),
+
+                          SizedBox(height: 8,),
+
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _namaPembeli,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 4,),
+
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _alamatPembeli,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 4,),
+
+                          DropdownButtonFormField(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Color(0xFF000000).withOpacity(0.25),
+                                size: 20,
+                              ),
+                            ),
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                        color: Color(0xFF000000)
+                                            .withOpacity(0.15))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                    borderSide:
+                                    BorderSide(color: Color(0xFF031F4B))),
+                                filled: false,
+                                contentPadding:
+                                EdgeInsets.only(left: 24.0, right: 0),
+                                hintStyle: GoogleFonts.openSans(
+                                    fontSize: 12,
+                                    color: Color(0xFF000000).withOpacity(
+                                        0.25)),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                        color: Colors.red)),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                        color: Colors.red, width: 1)),
+                                errorStyle: GoogleFonts.openSans(
+                                    fontSize: 10)),
+                            hint: Text(
+                              "Status",
+                              style: GoogleFonts.openSans(
+                                  fontSize: 12,
+                                  color: Color(0xFF000000).withOpacity(.25)),
+                            ),
+                            value: valueStatus,
+                            onChanged: (newValue) {
+                              setState(() {
+                                valueStatus = newValue;
+                              });
+                            },
+                            validator: (value) {
+                              if (valueStatus == null) {
+                                return "Status harus dipilih!";
+                              }
+                              return null;
+                            },
+                            items: status.map((valueItem) {
+                              return DropdownMenuItem(
+                                value: valueItem,
+                                child: Text(
+                                  valueItem,
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 12, color: Color(0xFF000000)),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+
+                          SizedBox(height: 8,),
+
+                          RaisedButton(
+                            color: Color(0xFF1F3A93),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            textColor: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(12),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Update",
+                                style: GoogleFonts.openSans(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              updateOrder(orderKey);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+
+                    Positioned(
+                      right: 0.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          justReset();
+                          Navigator.pop(context);
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundColor: Color(0xFF1F3A93),
+                            child: Icon(
+                              Icons.close,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -243,4 +500,62 @@ class _orderTabState extends State<orderTab> {
       ),
     );
   }
+
+  void getOrderDetail({String orderKey}) async {
+    DataSnapshot snapshot = await _reference.child(orderKey).once();
+
+    Map order = snapshot.value;
+
+    _namaItem = order['nama item'];
+    _jumlahItem = order['jumlah item'];
+    _date = order['tanggal'];
+    _urlItem = order['url'];
+    _namaPembeli = order['nama pembeli'];
+    _alamatPembeli = order['alamat pembeli'];
+    valueStatus = order['status'];
+  }
+
+  void justReset() {
+    _namaItem = null;
+    _jumlahItem = null;
+    _date = null;
+    _urlItem = null;
+    _namaPembeli = null;
+    _alamatPembeli = null;
+    valueStatus = null;
+  }
+
+  Color getStatusColor(String status) {
+    Color color = Theme
+        .of(context)
+        .accentColor;
+
+    if (status == 'Terkirim') {
+      color = Color(0xFF628C57);
+    }
+    if (status == 'Batal') {
+      color = Color(0xFFFF6A6A);
+    }
+    if (status == 'Diperiksa') {
+      color = Color(0xFFFFD54F);
+    }
+    if (status == 'Menunggu') {
+      color = Colors.black;
+    }
+    return color;
+  }
+
+  void updateOrder(String orderKey) {
+    Map<String, String> status = {
+      'status': valueStatus,
+    };
+
+    _reference.child(orderKey).update(status).then((value) {
+      justReset();
+      Navigator.pop(context);
+      setState(() {});
+    });
+  }
 }
+
+
