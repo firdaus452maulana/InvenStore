@@ -14,19 +14,20 @@ class _partnershipTabState extends State<partnershipTab> {
 
   DatabaseReference _referencePartner;
   Query _queryPartner;
+  String _namaPartner, _teleponPartner, _urlPartner, _alamatPartner;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _referencePartner = FirebaseDatabase.instance.reference().child('listPartnership');
-    _queryPartner = FirebaseDatabase.instance.reference().child('listPartnership').orderByChild('nama');
+    _referencePartner = FirebaseDatabase.instance.reference().child('listPartner');
+    _queryPartner = FirebaseDatabase.instance.reference().child('listPartner').orderByChild('nama');
   }
 
   Widget _buildListPartner({Map partner}){
     return GestureDetector(
       onTap: (){
-        //_showDialogOrder(item['key']);
+        _showDialogPartner(partner['key']);
       },
       child: Container(
         margin: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -82,11 +83,25 @@ class _partnershipTabState extends State<partnershipTab> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'IDR. ' + partner['harga'],
+                          partner['telepon'],
                           style: GoogleFonts.openSans(
                               color: Color(0xFFFF1F69),
                               fontWeight: FontWeight.normal,
                               fontSize: 16
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 4,)  ,
+
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          partner['alamat'],
+                          style: GoogleFonts.openSans(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12
                           ),
                         ),
                       ),
@@ -98,6 +113,104 @@ class _partnershipTabState extends State<partnershipTab> {
         ),
       ),
     );
+  }
+
+  Widget _showDialogPartner(String partnerKey){
+    getPartnerDetail(partnerKey: partnerKey);
+    showDialog(
+        context: context,
+        builder: (context){
+          return Dialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Container(
+              margin: EdgeInsets.all(24),
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: 16, bottom: 16, left: 8, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //posisi
+                        mainAxisSize: MainAxisSize.min,
+                        // untuk mengatur agar widget column mengikuti widget
+                        children: <Widget>[
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: _urlPartner != null
+                                  ? Image.network(_urlPartner, fit: BoxFit.fill)
+                                  : Image.network('https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png', fit: BoxFit.fill),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _namaPartner,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _teleponPartner,
+                              style: GoogleFonts.openSans(
+                                  color: Color(0xFFFF1F69),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _alamatPartner,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Positioned(
+                      right: 0.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          justReset();
+                          Navigator.pop(context);
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundColor: Color(0xFF1F3A93),
+                            child: Icon(
+                              Icons.close,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -210,4 +323,24 @@ class _partnershipTabState extends State<partnershipTab> {
       ),
     );
   }
+
+  getPartnerDetail({String partnerKey}) async {
+    DataSnapshot snapshot = await _referencePartner.child(partnerKey).once();
+
+    Map partner = snapshot.value;
+
+    _namaPartner = partner['nama'];
+    _alamatPartner = partner['alamat'];
+    _teleponPartner = partner['telepon'];
+    _urlPartner = partner['url'];
+
+  }
+
+  void justReset() {
+    _namaPartner = null;
+    _alamatPartner = null;
+    _teleponPartner = null;
+    _urlPartner = null;
+  }
+
 }

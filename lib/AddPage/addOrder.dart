@@ -188,7 +188,7 @@ class _addOrderPageState extends State<addOrderPage> {
                           ),
                           SizedBox(height: 12,),
 
-                          // NAMA ITEM
+                          // ALAMAT PEMBELI
                           Container(
                             child: TextFormField(
                               cursorColor: Colors.black,

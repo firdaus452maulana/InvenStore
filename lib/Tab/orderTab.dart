@@ -11,9 +11,10 @@ class orderTab extends StatefulWidget {
 
 class _orderTabState extends State<orderTab> {
 
-  DatabaseReference _reference;
+  DatabaseReference _reference, _ref;
   Query _queryOrder;
   String _namaItem, _urlItem, _jumlahItem, _date, _namaPembeli, _alamatPembeli, valueStatus;
+  int _soldOut;
 
   List status = ["Menunggu", "Diperiksa", "Batal", "Terkirim"];
 
@@ -22,6 +23,7 @@ class _orderTabState extends State<orderTab> {
     // TODO: implement initState
     super.initState();
     _reference = FirebaseDatabase.instance.reference().child('listOrder');
+    _ref = FirebaseDatabase.instance.reference().child('common');
     _queryOrder = FirebaseDatabase.instance.reference().child('listOrder').orderByChild('tanggal');
   }
 
@@ -503,6 +505,13 @@ class _orderTabState extends State<orderTab> {
 
   void getOrderDetail({String orderKey}) async {
     DataSnapshot snapshot = await _reference.child(orderKey).once();
+    DataSnapshot snapshot2 = await _ref.once();
+
+    Map common = snapshot.value;
+
+    String soldOut = common['stocks'];
+
+    _soldOut = int.parse(soldOut);
 
     Map order = snapshot.value;
 
@@ -549,6 +558,18 @@ class _orderTabState extends State<orderTab> {
     Map<String, String> status = {
       'status': valueStatus,
     };
+
+    if (valueStatus == 'Terkirim')
+      {
+        int tambahSoldOut = int.parse(_jumlahItem);
+        _soldOut += tambahSoldOut;
+
+        Map<String,String> common = {
+          'sold out' : _soldOut.toString(),
+        };
+
+        _ref.update(common);
+      }
 
     _reference.child(orderKey).update(status).then((value) {
       justReset();
