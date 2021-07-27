@@ -18,7 +18,7 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
     stockTab(),
     orderTab(),
     partnershipTab(),
-    storeTab()
+    //storeTab()
   ];
 
   void _onItemTap(int index){
@@ -177,10 +177,10 @@ class _mainMenuState extends State<mainMenu> with SingleTickerProviderStateMixin
             icon: Icon(Icons.account_tree),
             title: Text('Partnership'),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            title: Text('Store'),
-          )
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.store),
+          //   title: Text('Store'),
+          // )
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTap,

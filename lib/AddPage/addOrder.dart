@@ -428,6 +428,7 @@ class _addOrderPageState extends State<addOrderPage> {
       'nama item' : _namaItem,
       'harga item' : _hargaItem,
       'jumlah item' : jumlahItem,
+      'url': _urlItem,
     };
 
     _referenceOrder.push().set(order).then((value) {
@@ -443,6 +444,7 @@ class _addOrderPageState extends State<addOrderPage> {
     _date = null;
     _namaItem = null;
     _hargaItem = null;
+    _urlItem = null;
   }
 
 }
