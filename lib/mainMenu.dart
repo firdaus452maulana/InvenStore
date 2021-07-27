@@ -1,8 +1,8 @@
-import 'file:///D:/Firdaus/KULIAH/%234%20PROJECT/AndroidStudioProjects/dicoding_submission_flutter/lib/AddPage/addStock.dart';
-import 'package:dicoding_submission_flutter/orderTab.dart';
-import 'package:dicoding_submission_flutter/partnershipTab.dart';
-import 'package:dicoding_submission_flutter/stockTab.dart';
-import 'package:dicoding_submission_flutter/stroreTab.dart';
+import 'package:dicoding_submission_flutter/AddPage/addStock.dart';
+import 'package:dicoding_submission_flutter/Tab/orderTab.dart';
+import 'package:dicoding_submission_flutter/Tab/partnershipTab.dart';
+import 'package:dicoding_submission_flutter/Tab/stockTab.dart';
+import 'package:dicoding_submission_flutter/Tab/stroreTab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

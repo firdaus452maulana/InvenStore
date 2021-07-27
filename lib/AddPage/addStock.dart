@@ -154,7 +154,7 @@ class _addStockPageState extends State<addStockPage> {
                             child: TextFormField(
                               cursorColor: Colors.black,
                               style: GoogleFonts.openSans(fontSize: 12),
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.number,
                               controller: _hargaItemController,
                               decoration: new InputDecoration(
                                   fillColor: Colors.white,
