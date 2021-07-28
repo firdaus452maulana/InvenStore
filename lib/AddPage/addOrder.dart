@@ -429,6 +429,7 @@ class _addOrderPageState extends State<addOrderPage> {
       'harga item' : _hargaItem,
       'jumlah item' : jumlahItem,
       'url': _urlItem,
+      'status': 'Menunggu',
     };
 
     _referenceOrder.push().set(order).then((value) {

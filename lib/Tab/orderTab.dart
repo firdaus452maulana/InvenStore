@@ -13,7 +13,7 @@ class _orderTabState extends State<orderTab> {
 
   DatabaseReference _reference, _ref;
   Query _queryOrder;
-  String _namaItem, _urlItem, _jumlahItem, _date, _namaPembeli, _alamatPembeli, valueStatus;
+  String _namaItem, _urlItem, _jumlahItem, _date, _namaPembeli, _alamatPembeli, valueStatus, soldOut;
   int _soldOut;
 
   List status = ["Menunggu", "Diperiksa", "Batal", "Terkirim"];
@@ -25,6 +25,7 @@ class _orderTabState extends State<orderTab> {
     _reference = FirebaseDatabase.instance.reference().child('listOrder');
     _ref = FirebaseDatabase.instance.reference().child('common');
     _queryOrder = FirebaseDatabase.instance.reference().child('listOrder').orderByChild('tanggal');
+    getStockSoldDetail();
   }
 
   Widget _buildListOrder({Map order}){
@@ -199,8 +200,17 @@ class _orderTabState extends State<orderTab> {
                                       children: <Widget>[
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(
+                                          child: _date != null
+                                            ? Text(
                                             _date,
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12
+                                            ),
+                                          )
+                                          : Text(
+                                            "Loading...",
                                             style: GoogleFonts.openSans(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.normal,
@@ -213,22 +223,40 @@ class _orderTabState extends State<orderTab> {
 
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(
+                                          child: _namaItem != null
+                                            ? Text(
                                             _namaItem,
                                             style: GoogleFonts.openSans(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16
                                             ),
-                                          ),
+                                          )
+                                          : Text(
+                                            'Loading...',
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16
+                                            ),
+                                          )
                                         ),
 
                                         SizedBox(height: 4,)  ,
 
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            _jumlahItem + 'lusin',
+                                          child: _jumlahItem != null
+                                          ? Text(
+                                            _jumlahItem + ' lusin',
+                                            style: GoogleFonts.openSans(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 16
+                                            ),
+                                          )
+                                          : Text(
+                                            'Loading...',
                                             style: GoogleFonts.openSans(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.normal,
@@ -247,8 +275,17 @@ class _orderTabState extends State<orderTab> {
 
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
+                            child: _namaPembeli != null
+                            ? Text(
                               _namaPembeli,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16
+                              ),
+                            )
+                            : Text(
+                              'Loading...',
                               style: GoogleFonts.openSans(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -261,8 +298,17 @@ class _orderTabState extends State<orderTab> {
 
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
+                            child: _alamatPembeli != null
+                            ? Text(
                               _alamatPembeli,
+                              style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12
+                              ),
+                            )
+                            : Text(
+                              'Loading...',
                               style: GoogleFonts.openSans(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,
@@ -505,13 +551,6 @@ class _orderTabState extends State<orderTab> {
 
   void getOrderDetail({String orderKey}) async {
     DataSnapshot snapshot = await _reference.child(orderKey).once();
-    DataSnapshot snapshot2 = await _ref.once();
-
-    Map common = snapshot.value;
-
-    String soldOut = common['stocks'];
-
-    _soldOut = int.parse(soldOut);
 
     Map order = snapshot.value;
 
@@ -522,6 +561,21 @@ class _orderTabState extends State<orderTab> {
     _namaPembeli = order['nama pembeli'];
     _alamatPembeli = order['alamat pembeli'];
     valueStatus = order['status'];
+
+
+    setState(() {});
+  }
+
+  getStockSoldDetail() async {
+    DataSnapshot snapshot = await _ref.once();
+
+    Map common = snapshot.value;
+
+    soldOut = common['sold out'];
+
+    _soldOut = int.parse(soldOut);
+
+    setState(() {});
   }
 
   void justReset() {
@@ -561,6 +615,7 @@ class _orderTabState extends State<orderTab> {
 
     if (valueStatus == 'Terkirim')
       {
+        _soldOut = int.parse(soldOut);
         int tambahSoldOut = int.parse(_jumlahItem);
         _soldOut += tambahSoldOut;
 

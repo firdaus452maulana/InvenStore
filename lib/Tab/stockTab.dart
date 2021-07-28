@@ -33,6 +33,9 @@ class _stockTabState extends State<stockTab> {
       onTap: (){
         _showDialogOrder(item['key']);
       },
+      onLongPress: (){
+        _showDialogDelete(item['key']);
+      },
       child: Container(
         margin: EdgeInsets.only(left: 16, right: 16, top: 16),
         padding: EdgeInsets.only(bottom: 12, right: 12, top: 12),
@@ -206,6 +209,116 @@ class _stockTabState extends State<stockTab> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget _showDialogDelete(String itemKey) {
+    getItemDetail(itemKey: itemKey);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            backgroundColor: Colors.black.withOpacity(0.75),
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            child: Container(
+              padding: EdgeInsets.all(24),
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: 16, bottom: 8, left: 8, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //posisi
+                        mainAxisSize: MainAxisSize.min,
+                        // untuk mengatur agar widget column mengikuti widget
+                        children: <Widget>[
+                          Text(
+                            "${_namaItem} akan dihapus secara permanen",
+                            style: GoogleFonts.openSans(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 16),
+                          Center(
+                              child: Text(
+                                "Apakah Anda Yakin ?",
+                                style: GoogleFonts.openSans(
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              )),
+                          SizedBox(height: 16),
+                          Container(
+                            //color: Colors.red,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                FlatButton(
+                                  color: Colors.grey[400],
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  textColor: Colors.white,
+                                  child: Container(
+                                    width: 64,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Tidak",
+                                      style: GoogleFonts.openSans(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    justReset();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                SizedBox(width: 12,),
+                                FlatButton(
+                                  color: Color(0xFF1F3A93),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  textColor: Colors.white,
+                                  child: Container(
+                                    width: 64,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "Ya",
+                                      style: GoogleFonts.openSans(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    hapusItem(itemKey: itemKey);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -463,5 +576,20 @@ class _stockTabState extends State<stockTab> {
     _namaItem = null;
     _hargaItem = null;
     _urlItem = null;
+  }
+
+  void hapusItem({String itemKey}) {
+    _reference.child(itemKey).remove().whenComplete(() {
+
+      _jumlahItem --;
+      Map<String,String> common = {
+        'stocks' : _jumlahItem.toString(),
+      };
+
+      _ref.update(common);
+
+      justReset();
+      Navigator.pop(context);
+    });
   }
 }
